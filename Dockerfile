@@ -23,8 +23,11 @@ ENV GROUP_ID=${GROUP_ID:-1000}
 ENV USER=${USER:-developer}
 ENV HOME=/home/${USER}
 
-RUN apt-get update && apt-get install -y sudo vim && \
-    useradd -ms /bin/bash ${USER} && \
+ARG COMMON_LIBS=sudo vim
+
+RUN apt-get update && apt-get install -y ${COMMON_LIBS} 
+
+RUN useradd -ms /bin/bash ${USER} && \
     export uid=${USER_ID} gid=${GROUP_ID} && \
     mkdir -p /home/${USER} && \
     mkdir -p /home/${USER}/workspace && \
